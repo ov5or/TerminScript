@@ -92,7 +92,7 @@ local theme = getgenv().theme or {
 do
     function library.init(title, version, id, position, size)
         local position = position or UDim2.new(0.2, 0, 0.2, 0)
-        local size = size or UDim2.new(0, 670, 0, 350)
+        local size = size or UDim2.new(0, 630, 0, 350)
 
         local ScreenGui,MasterContainer = util.new("ScreenGui", { Parent = game:GetService("CoreGui"), Name=id }, {
             util.new("Frame", { --MasterContainer
