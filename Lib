@@ -78,7 +78,7 @@ local theme = getgenv().theme or {
 
     Accent = Color3.fromRGB(255, 0, 0), --> Used for hover outlines, selected tab
 
-    NotSelectedTab = Color3.fromRGB(225, 0, 0), --> shows on all OTHER tabs
+    NotSelectedTab = Color3.fromRGB(200, 0, 0), --> shows on all OTHER tabs
 
     TextColor = Color3.fromRGB(255,255,255),
     SubTextColor = Color3.fromRGB(200,200,200),
