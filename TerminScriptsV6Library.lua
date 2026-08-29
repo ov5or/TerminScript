@@ -264,11 +264,11 @@ end
 
 function Library:_createGui()
     self.ScreenGui = New("ScreenGui",PlayerGui,{
-        Name="TerminScriptsV6",
+        Name="TerminScriptsV7",
         ResetOnSpawn=false,
         IgnoreGuiInset=true,
         ZIndexBehavior=Enum.ZIndexBehavior.Sibling,
-        DisplayOrder=100
+        DisplayOrder=999
     })
 
     self.Main = New("Frame",self.ScreenGui,{
@@ -280,6 +280,18 @@ function Library:_createGui()
         BorderSizePixel=0,
         ClipsDescendants=true
     })
+    self.PremiumAccent = New("Frame",self.Main,{
+        Name="PremiumAccent",
+        Size=UDim2.new(1,-28,0,2),
+        Position=UDim2.new(0,14,0,1),
+        BackgroundColor3=Theme.Primary,
+        BackgroundTransparency=0.05,
+        BorderSizePixel=0,
+        ZIndex=50
+    })
+    Corner(self.PremiumAccent,self:_s(2))
+    Stroke(self.PremiumAccent,Theme.Primary,0.35,self:_s(1))
+
 
     Corner(self.Main,self:_s(22))
     self.MainStroke = Stroke(self.Main,Theme.BorderStrong,0.22,self:_s(1.2))
@@ -494,13 +506,15 @@ end
 
 function Library:_animateIn()
     local target = self.Main.Size
-    self.Main.Size = UDim2.fromOffset(target.X.Offset*0.92,target.Y.Offset*0.92)
+    self.Main.Size = UDim2.fromOffset(target.X.Offset*0.86,target.Y.Offset*0.86)
     self.Main.BackgroundTransparency = 1
+    self.Main.Rotation = -0.7
 
     task.defer(function()
         Play(self.Main,Tween.Spring,{
             Size=target,
-            BackgroundTransparency=0
+            BackgroundTransparency=0,
+            Rotation=0
         })
     end)
 end
@@ -581,15 +595,15 @@ function Library:CreateTab(name,config)
     local width = math.max(self:_s(78),textBounds.X+self:_s(34))
 
     tab.Button = New("TextButton",self.TabList,{
-        Size=UDim2.fromOffset(width,self:_s(48)),
+        Size=UDim2.fromOffset(width,self:_s(52)),
         BackgroundColor3=Theme.Surface,
-        BackgroundTransparency=0.52,
+        BackgroundTransparency=0.60,
         BorderSizePixel=0,
         Text="",
         AutoButtonColor=false
     })
 
-    Corner(tab.Button,self:_s(12))
+    Corner(tab.Button,self:_s(14))
     tab.Stroke = Stroke(tab.Button,Theme.Border,0.68,self:_s(1))
 
     tab.Label = Text(tab.Button,name,13,Theme.Muted,Enum.Font.GothamSemibold,{
@@ -598,7 +612,7 @@ function Library:CreateTab(name,config)
     })
 
     tab.Bar = New("Frame",tab.Button,{
-        Size=UDim2.fromOffset(0,self:_s(2)),
+        Size=UDim2.fromOffset(0,self:_s(3)),
         Position=UDim2.new(0.5,0,1,-self:_s(3)),
         AnchorPoint=Vector2.new(0.5,0),
         BackgroundColor3=Theme.Primary,
@@ -621,10 +635,10 @@ function Library:CreateTab(name,config)
     })
 
     New("UIPadding",tab.Page,{
-        PaddingTop=UDim.new(0,self:_s(8)),
-        PaddingBottom=UDim.new(0,self:_s(18)),
-        PaddingLeft=UDim.new(0,self:_s(2)),
-        PaddingRight=UDim.new(0,self:_s(6))
+        PaddingTop=UDim.new(0,self:_s(12)),
+        PaddingBottom=UDim.new(0,self:_s(24)),
+        PaddingLeft=UDim.new(0,self:_s(6)),
+        PaddingRight=UDim.new(0,self:_s(10))
     })
 
     New("UIListLayout",tab.Page,{
@@ -634,13 +648,13 @@ function Library:CreateTab(name,config)
 
     tab.Button.MouseEnter:Connect(function()
         if not tab.Active then
-            Play(tab.Button,Tween.Fast,{BackgroundTransparency=0.25})
+            Play(tab.Button,Tween.Fast,{BackgroundTransparency=0.16})
         end
     end)
 
     tab.Button.MouseLeave:Connect(function()
         if not tab.Active then
-            Play(tab.Button,Tween.Fast,{BackgroundTransparency=0.52})
+            Play(tab.Button,Tween.Fast,{BackgroundTransparency=0.60})
         end
     end)
 
@@ -704,7 +718,7 @@ function Library:SwitchTab(target)
         else
             Play(tab.Button,Tween.Fast,{
                 BackgroundColor3=Theme.Surface,
-                BackgroundTransparency=0.52
+                BackgroundTransparency=0.60
             })
             Play(tab.Label,Tween.Fast,{TextColor3=Theme.Muted})
             Play(tab.Stroke,Tween.Fast,{
@@ -712,7 +726,7 @@ function Library:SwitchTab(target)
                 Transparency=0.68
             })
             Play(tab.Bar,Tween.Fast,{
-                Size=UDim2.fromOffset(0,self:_s(2))
+                Size=UDim2.fromOffset(0,self:_s(3))
             })
         end
     end
@@ -2846,7 +2860,8 @@ function Library:Toggle()
         self.Main.BackgroundTransparency=1
 
         Play(self.Main,Tween.Spring,{
-            BackgroundTransparency=0
+            BackgroundTransparency=0,
+            Rotation=0
         })
     end
 end
